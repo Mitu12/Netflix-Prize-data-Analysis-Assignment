@@ -1,0 +1,13 @@
+file = open('movie_titles.txt', 'r')
+lines = 
+while True
+    line = file.readline()
+    if not line
+        break
+    mod_line = line.replace(',', '', 2)
+    lines += mod_line
+file.close()
+
+file1 = open('movie_titles.txt', 'w')
+file1.write(lines)
+file1.close()

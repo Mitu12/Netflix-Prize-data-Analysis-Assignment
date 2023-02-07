@@ -1,0 +1,45 @@
+import csv
+
+class Movie:
+    def __init__(self, MovieID, UserID, Rate, Date, Titles=None):
+        self.MovieID = MovieID
+        self.UserID = UserID
+        self.Rate = Rate
+        self.Date = Date
+        self.Titles = Titles
+
+def main():
+     all_objects = []
+     with open("data1.csv", "r") as file:
+        reader = csv.reader(file)
+        for each in reader:
+            MovieID = each[0]
+            UserID = each[1]
+            Rate = each[2]
+            Date = each[3]
+            Mov = Movie(MovieID=MovieID, UserID=UserID, Rate=Rate, Date=Date)
+            all_objects.append(Mov)
+     # for each in all_objects:
+     #    print(each.MovieID,each.UserID,each.Rate,each.Date)
+     with open("titles.txt", "r") as file:
+         reader = csv.reader(file)
+         for each in reader:
+             M_ID=each[0]
+             Titles=each[1]
+
+             for Mov in all_objects:
+                 if Mov.MovieID == M_ID:
+                     Mov.Titles= Titles
+
+
+
+                     #     EXPORT A CSV WITH ALL THE EMPLOYEES WITH DETAILS
+                     with open("Assignment.csv", "w") as file:
+                         writer = csv.writer(file)
+                         for each in all_objects:
+                             row = [each.MovieID, each.UserID, each.Titles, each.Rate, each.Date]
+                             writer.writerow(row)
+     # for each in all_objects:
+     #        print(each.MovieID,each.UserID,each.Rate,each.Date,each.Titles)
+if __name__ == "__main__":
+    main()

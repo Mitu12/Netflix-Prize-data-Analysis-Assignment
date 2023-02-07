@@ -1,0 +1,41 @@
+from datetime import datetime
+import pandas as pd
+import numpy as np
+import matplotlib
+matplotlib.use('nbagg')
+import matplotlib.pyplot as plt
+plt.rcParams.update({'figure.max_open_warning': 0})
+import seaborn as sns
+sns.set_style('whitegrid')
+import os
+start = datetime.now()
+if not os.path.isfile('data.csv'):
+
+    data = open('data.csv', mode='w')
+
+    row = list()
+    files = ['F:\CYBI-6378\Assignment\combined_data_1.txt', 'F:\CYBI-6378\Assignment\combined_data_2.txt',
+             'F:\CYBI-6378\Assignment\combined_data_3.txt', 'F:\CYBI-6378\Assignment\combined_data_4.txt']
+    for file in files:
+        print("Reading ratings from {}...".format(file))
+        with open(file) as f:
+            for line in f:
+                del row[:]
+                line = line.strip()
+                if line.endswith(':'):
+
+                    movie_id = line.replace(':', '')
+                else:
+                    row = [x for x in line.split(',')]
+                    row.insert(0, movie_id)
+                    data.write(','.join(row))
+                    data.write('\n')
+        print("Done.\n")
+    data.close()
+print('Time taken :', datetime.now() - start)
+print("creating the dataframe from data.csv file..")
+df = pd.read_csv('data.csv', sep=',',
+                 names=['MovieID', 'UserID', 'Rating', 'Date'])
+df.date = pd.to_datetime(df.date)
+print('Done.\n')
+	
